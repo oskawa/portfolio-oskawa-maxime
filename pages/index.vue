@@ -3,10 +3,8 @@
     <div class="loadingScreen">
       <div id="loader" class="loader">
         <div id="progressBar">
-          <div id="bar">
-           
-          </div>
-          <p id="progressText"> {{test}}</p>
+          <div id="bar"></div>
+          <p id="progressText">{{ test }}</p>
         </div>
       </div>
     </div>
@@ -83,7 +81,6 @@ import TWEEN from "@tweenjs/tween.js";
 import axios from "axios";
 
 export default {
- 
   data() {
     return {
       hdr: "/models/venice.hdr",
@@ -101,7 +98,7 @@ export default {
       light: null,
       mixer: null,
       envMap: null,
-      test:"",
+      test: "",
       projectDiv: null,
       labelRenderer: null,
       object_ID: null,
@@ -312,16 +309,18 @@ export default {
       //     this.scene.background = texture;
       //     this.scene.environment = texture;
       //   });
-      const test = this.scene
-        const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
+      const test = this.scene;
+      const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
 
-      new RGBELoader().setDataType(THREE.UnsignedByteType).load('/models/venice.hdr', function(texture) {
-            const envMap = pmremGenerator.fromEquirectangular(texture).texture;
-            test.background = envMap;
-            test.environment = envMap;
-            texture.dispose();
-            pmremGenerator.dispose();
-        })
+      new RGBELoader()
+        .setDataType(THREE.UnsignedByteType)
+        .load("/models/venice.hdr", function (texture) {
+          const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+          test.background = envMap;
+          test.environment = envMap;
+          texture.dispose();
+          pmremGenerator.dispose();
+        });
 
       new GLTFLoader().load(
         "/models/test_40.gltf",
@@ -345,25 +344,23 @@ export default {
             this.mixer.clipAction(clip).play();
           });
         },
-         (xhr) => {
-          
+        (xhr) => {
           const loadbar = document.getElementById("bar");
           const visibilityLoader = document.querySelector(".loadingScreen");
-        
-          this.bar = Math.floor((250 * xhr.loaded) / xhr.total);
-          console.log(this.bar)
-          loadbar.style.width = this.bar+"px";
-          
 
-          if (this.bar == 250) {
+          const bar = Math.floor((250 * xhr.loaded) / xhr.total);
+
+          console.log(bar);
+          loadbar.style.width = bar + "px";
+
+          if (bar == 250) {
             setTimeout(function () {
               visibilityLoader.style.opacity = "0";
               visibilityLoader.style.visibility = "hidden";
             }, 2000);
           }
 
-          this.test = (this.bar).toString()
-          
+          this.test = this.bar.toString();
         }
       );
 
@@ -524,8 +521,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-body{
+body {
   overflow: hidden;
 }
 .loadingScreen {
@@ -559,23 +555,20 @@ body{
       background-color: #808080;
       width: 250px;
       height: 10px;
-      margin:auto;
+      margin: auto;
 
       #bar {
-       
         background-color: white;
         width: 1px;
         height: 10px;
       }
-      #progressText{
-         color:white;
-        font-size:14px;
+      #progressText {
+        color: white;
+        font-size: 14px;
       }
     }
   }
 }
-
-
 
 #__layout {
   position: absolute;
