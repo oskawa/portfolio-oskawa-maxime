@@ -345,11 +345,12 @@ export default {
           });
         },
         (xhr) => {
+           var totalSize = 15073008;
           console.log(xhr.total)
           const loadbar = document.getElementById("bar");
           const visibilityLoader = document.querySelector(".loadingScreen");
 
-          const bar = Math.floor((250 * xhr.loaded) / xhr.total);
+          const bar = Math.floor((250 * xhr.loaded) / totalSize);
 
           console.log(bar);
           loadbar.style.width = bar + "px";
