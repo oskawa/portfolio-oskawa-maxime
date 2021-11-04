@@ -33,6 +33,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/google-fonts'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -46,18 +47,18 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
+  googleFonts: {
+    families: {
+      
+      'Open+Sans': {
+        wght: [100, 400],
+        ital: [100]
+      },
+    }
+  }
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
-  extend(config, { isDev, isClient }) {
-    // ..
-    
-    config.module.rules.push({
-      test: /\.(hdr)$/,
-      loader: 'url-loader'
-    })
-  },
-  transpile: [
-    "three"
-  ]
+ 
 }
