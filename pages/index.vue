@@ -345,6 +345,7 @@ export default {
           });
         },
         (xhr) => {
+          console.log(xhr.total)
           const loadbar = document.getElementById("bar");
           const visibilityLoader = document.querySelector(".loadingScreen");
 
