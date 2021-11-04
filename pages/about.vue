@@ -1,0 +1,197 @@
+<template>
+  <div>
+    <div id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-lg-5 zIndex_about">
+            <h1 data-aos="fade-right" data-aos-duration="1500">{{ title }}</h1>
+            <p>{{ presentation }}</p>
+          </div>
+          <div class="col-12 col-lg-5 offset-md-1 col_about">
+            <img
+              :src="`http://localhost:1337${img1}`"
+              alt=""
+              class="img_About"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="experiences">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-lg-5 " v-bind:class="{ colExperiences: isActive }">
+              
+            <img
+              v-for="experience in experiences"
+              :key="experience.id"
+              v-show="experience.active"
+              :src="`http://localhost:1337${experience.imageprofessionnel.url}`"
+              alt=""
+              class="imgExperiences"
+            />
+          </div>
+          <div class="col-12 col-lg-5 offset-md-1 zIndex_about">
+            <h2>{{ titleExperiences }}</h2>
+
+            <ul class="experiences_Liste">
+              <li v-for="experience in experiences" :key="experience.id">
+                <div class="texte">
+                  <button
+                    v-on:click="toggleActive(experience)"
+                    class="accordeon"
+                  >
+                    <h3>{{ experience.TitreExperience }}</h3>
+                    <div class="separation">
+                      <span class="ligne"></span>
+                      <span class="rond"></span>
+                    </div>
+                  </button>
+                  <div>
+                    <p v-if="experience.active">
+                      {{ experience.descriptionExperience }}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+export default {
+  layout: "black",
+  data() {
+    return {
+      title: "",
+      presentation: "",
+      img1: "",
+      titleExperiences: "",
+      experiences: {},
+      isActive:false,
+    };
+  },
+  methods: {
+    toggleActive: function (item) {
+      this.experiences.forEach(element => {
+          element.active= false          
+      });
+      item.active = !item.active;
+      console.log(item)
+      this.isActive=true
+    },
+  },
+  mounted() {
+    axios
+      .get("http://localhost:1337/about")
+      .then((responses) => {
+        const responseOne = responses;
+        this.title = responseOne.data.Titre;
+        this.presentation = responseOne.data.Presentation;
+        this.img1 = responseOne.data.ImageADroite.url;
+        this.titleExperiences = responseOne.data.Sectionexperiences;
+        this.experiences = responseOne.data.Experiences;
+      })
+
+      .catch((errors) => {
+        // react on errors.
+      });
+  },
+};
+</script>
+
+<style lang="scss">
+.col_about {
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    right: -20px;
+    height: 550px;
+    z-index: -1;
+    width: 90%;
+    background-color: #2e475e;
+  }
+}
+.img_About {
+  width: 100%;
+  height: 550px;
+  object-fit: cover;
+  box-shadow: rgb(0 0 0/24%);
+}
+#experiences {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+.experiences_Liste {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+.colExperiences {
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+   
+    right:-15px;
+    height: 550px;
+    z-index: -1;
+    width: 90%;
+    background-color: #2e475e;
+  }
+}
+button {
+  border: none;
+  background: none;
+  margin: 0;
+  padding: 0;
+  h3 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    text-align: left;
+  }
+  .separation {
+    position: relative;
+    width: 350px;
+    .ligne {
+      width: 100%;
+      height: 2px;
+      margin: auto;
+      background: black;
+      display: block;
+      min-height: 2px;
+    }
+    .rond {
+      width: 26px;
+      height: 26px;
+      border-radius: 25px;
+      border: 2px solid black;
+      display: block;
+      color: white;
+      font-weight: 800;
+      text-align: center;
+      line-height: 50px;
+      position: absolute;
+      right: -25px;
+      top: -12px;
+    }
+  }
+}
+
+.imgExperiences {
+  width: 100%;
+  position: relative;
+  height: 550px;
+  object-fit: cover;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+}
+</style>
