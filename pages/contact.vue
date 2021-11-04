@@ -24,23 +24,58 @@
                 fields?
               </div>
               <div>
-                <label for="full_name" class="sr-only">Full name*</label>
-                <div class="">
-                  <input
-                    v-model="name"
-                    required
-                    name="name"
-                    id="full_name"
-                    class="form-input"
-                    placeholder="Full name*"
-                  />
-                </div>
+                <label for="full_name" class="">Full name*</label>
+
+                <input
+                  v-model="name"
+                  required
+                  name="name"
+                  id="full_name"
+                  class="form-input"
+                  placeholder="Full name*"
+                />
               </div>
               <!-- The whole field and label is set to display hidden with Tailwind CSS -->
+
+              <div>
+                <label for="email">Email*</label>
+
+                <input
+                  required
+                  v-model="email"
+                  name="email"
+                  id="email"
+                  type="email"
+                  class=""
+                  placeholder="Email*"
+                />
+              </div>
+              <div>
+                <label for="phone">Phone</label>
+
+                <input
+                  v-model="phone"
+                  name="phone"
+                  id="phone"
+                  class="form-input"
+                  placeholder="Phone"
+                />
+              </div>
+              <div>
+                <label for="message">Message</label>
+
+                <textarea
+                  required
+                  v-model="message"
+                  name="message"
+                  id="message"
+                  rows="4"
+                  class="form-input"
+                  placeholder="Message*"
+                ></textarea>
+              </div>
               <div class="invisible">
-                <label class="sr-only"
-                  >Don’t fill this out if you're human:
-                </label>
+                <label> Don’t fill this out if you're human: </label>
                 <input
                   v-model="bot"
                   name="bot-field"
@@ -48,49 +83,9 @@
                   class="form-input"
                 />
               </div>
-              <div>
-                <label for="email" class="sr-only">Email*</label>
-                <div class="relative rounded-md shadow-sm">
-                  <input
-                    required
-                    v-model="email"
-                    name="email"
-                    id="email"
-                    type="email"
-                    class=""
-                    placeholder="Email*"
-                  />
-                </div>
-              </div>
-              <div>
-                <label for="phone" class="sr-only">Phone</label>
-                <div class="relative rounded-md shadow-sm">
-                  <input
-                    v-model="phone"
-                    name="phone"
-                    id="phone"
-                    class="form-input"
-                    placeholder="Phone"
-                  />
-                </div>
-              </div>
-              <div>
-                <label for="message" class="sr-only">Message</label>
-                <div class="">
-                  <textarea
-                    required
-                    v-model="message"
-                    name="message"
-                    id="message"
-                    rows="4"
-                    class="form-input"
-                    placeholder="Message*"
-                  ></textarea>
-                </div>
-              </div>
               <div class="">
                 <span class="">
-                  <button type="submit" class="">
+                  <button type="submit" class="btn_stroke">
                     {{ loading ? "Sending Message..." : "Submit" }}
                   </button>
                 </span>
@@ -178,7 +173,28 @@ export default {
 
 <style lang="scss">
 #contact {
-  
+  h1 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    margin-bottom: 50px;
+  }
+  label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    width: 81%;
+  }
+  input,
+  textarea {
+    border: none;
+    border-bottom-color: currentcolor;
+    border-bottom-style: none;
+    border-bottom-width: medium;
+    border-bottom: 1px solid black;
+    width: 100%;
+  }
+ 
   img {
     width: 100%;
     position: relative;

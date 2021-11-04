@@ -8,11 +8,7 @@
             <p>{{ presentation }}</p>
           </div>
           <div class="col-12 col-lg-5 offset-md-1 col_about">
-            <img
-              :src="`${img1}`"
-              alt=""
-              class="img_About"
-            />
+            <img :src="`${img1}`" alt="" class="img_About" />
           </div>
         </div>
       </div>
@@ -21,8 +17,10 @@
     <div id="experiences">
       <div class="container">
         <div class="row">
-          <div class="col-12 col-lg-5 " v-bind:class="{ colExperiences: isActive }">
-              
+          <div
+            class="col-12 col-lg-5"
+            v-bind:class="{ colExperiences: isActive }"
+          >
             <img
               v-for="experience in experiences"
               :key="experience.id"
@@ -74,17 +72,17 @@ export default {
       img1: "",
       titleExperiences: "",
       experiences: {},
-      isActive:false,
+      isActive: false,
     };
   },
   methods: {
     toggleActive: function (item) {
-      this.experiences.forEach(element => {
-          element.active= false          
+      this.experiences.forEach((element) => {
+        element.active = false;
       });
       item.active = !item.active;
-      console.log(item)
-      this.isActive=true
+      console.log(item);
+      this.isActive = true;
     },
   },
   mounted() {
@@ -140,8 +138,8 @@ export default {
     content: "";
     position: absolute;
     bottom: -20px;
-   
-    right:-15px;
+
+    right: -15px;
     height: 550px;
     z-index: -1;
     width: 90%;
@@ -193,5 +191,17 @@ button {
   height: 550px;
   object-fit: cover;
   box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+}
+#about {
+  h1 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+  }
+  p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    line-height: 1.4;
+  }
 }
 </style>

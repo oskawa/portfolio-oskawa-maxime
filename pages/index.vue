@@ -289,6 +289,7 @@ export default {
       this.renderer.domElement.style.position = "fixed";
       this.renderer.domElement.style.top = "0px";
       this.renderer.domElement.style.zIndex = "10";
+      
 
       this.camera = new THREE.PerspectiveCamera(
         50,
@@ -372,6 +373,7 @@ export default {
       this.labelRenderer.domElement.style.position = "absolute";
       this.labelRenderer.domElement.style.top = "0px";
       this.labelRenderer.domElement.style.zIndex = "11";
+      this.labelRenderer.domElement.style.visibility = "hidden"
 
       const directional = new THREE.DirectionalLight(0xffffbb, 1);
       directional.position.set(0, 600, 600);
@@ -507,6 +509,7 @@ export default {
       this.cameraRotation = new THREE.Vector3(0, 0, 0);
       this.tweenCamera1(this.cameraRotation, duration);
       this.isHidden = true;
+      this.labelRenderer.domElement.style.visibility = "visible"
       document.getElementById("__layout").style.zIndex = "0";
     },
     returnToCamera() {
@@ -666,4 +669,6 @@ h2 {
   font-weight: 200;
   color: white;
 }
+
+
 </style>
