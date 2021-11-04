@@ -123,7 +123,7 @@ export default {
     };
   },
   mounted() {
-    let one = "http://localhost:1337/contact";
+    let one = "https://back-portf.herokuapp.com/contact";
 
     const requestOne = axios.get(one);
 

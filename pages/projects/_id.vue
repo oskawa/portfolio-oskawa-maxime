@@ -44,7 +44,7 @@ export default {
     };
   },
   mounted() {
-    axios.get(`http://localhost:1337/projects/${this.id}`).then((response) => {
+    axios.get(`https://back-portf.herokuapp.com/projects/${this.id}`).then((response) => {
       this.projet = {
         titre: response.data.titreDuProjet,
         typeDeProjet: response.data.typeDeProjet,

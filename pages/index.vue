@@ -493,7 +493,7 @@ export default {
     },
     fetchDataCategory(id) {
       axios
-        .get(`http://localhost:1337/categorypourprojets/${id}`)
+        .get(`https://back-portf.herokuapp.com/categorypourprojets/${id}`)
         .then((response) => {
           this.lienProjets = response.data.projects;
           this.informationsProjets = {

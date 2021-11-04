@@ -89,7 +89,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:1337/about")
+      .get("https://back-portf.herokuapp.com/about")
       .then((responses) => {
         const responseOne = responses;
         this.title = responseOne.data.Titre;
