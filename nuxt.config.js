@@ -51,11 +51,11 @@ export default {
     families: {
       
       'Open+Sans': {
-        wght: [100, 400],
+        wght: [300, 400, 600, 700],
         ital: [100]
       },
     }
-  }
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
