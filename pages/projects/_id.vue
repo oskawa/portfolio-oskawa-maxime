@@ -2,7 +2,7 @@
   <div>
     <div
       id="project_background"
-      :style="`background-image:url('http://localhost:1337${projet.categoryImage}')`"
+      :style="`background-image:url('${projet.categoryImage}')`"
     ></div>
     <div id="projet">
       <div class="container">
@@ -15,7 +15,7 @@
             </div>
             <div v-for="image in projet.galery" :key="image.id" class="img">
               <img
-                :src="`http://localhost:1337${image.formats.large.url}`"
+                :src="`${image.formats.large.url}`"
                 alt=""
               />
             </div>

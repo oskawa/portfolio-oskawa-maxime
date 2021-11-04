@@ -5,7 +5,7 @@
         <div class="row justify-content-between">
           <div class="col-3">
             <nuxt-link to="/">
-              <img :src="`http://localhost:1337${logo}`" />
+              <img :src="`${logo}`" />
             </nuxt-link>
           </div>
           <div class="col-lg-9 text-end" style="text-align:end">
@@ -17,7 +17,7 @@
                   <li v-for="link in reseauxLink" :key="link.id">
                     <a :href="`${link.LienVersSite}`">
                       <img
-                        :src="`http://localhost:1337${link.ImageVersSite.url}`"
+                        :src="`${link.ImageVersSite.url}`"
                         :alt="`${link.ImageVersSite.alternativeText}`"
                       />
                     </a>
@@ -44,7 +44,7 @@ export default {
     };
   },
   mounted() {
-    let one = "http://localhost:1337/options";
+    let one = "https://back-portf.herokuapp.com/options";
 
     const requestOne = axios.get(one);
 

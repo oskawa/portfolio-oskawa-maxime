@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-5 offset-md-1 col-12 imageLeft">
-          <img :src="`http://localhost:1337${img}`" />
+          <img :src="`${img}`" />
         </div>
         <div class="col-lg-6 col-12 texteRight">
           <h1>{{ title }}</h1>
@@ -154,7 +154,7 @@ export default {
       // Otherwise the form will try to go through.
       else {
         axios
-          .post("http://localhost:1337/messages", {
+          .post("https://back-portf.herokuapp.com/messages", {
             name: this.name,
             email: this.email,
             phone: this.phone,

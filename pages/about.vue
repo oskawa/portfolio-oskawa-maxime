@@ -9,7 +9,7 @@
           </div>
           <div class="col-12 col-lg-5 offset-md-1 col_about">
             <img
-              :src="`http://localhost:1337${img1}`"
+              :src="`${img1}`"
               alt=""
               class="img_About"
             />
@@ -27,7 +27,7 @@
               v-for="experience in experiences"
               :key="experience.id"
               v-show="experience.active"
-              :src="`http://localhost:1337${experience.imageprofessionnel.url}`"
+              :src="`${experience.imageprofessionnel.url}`"
               alt=""
               class="imgExperiences"
             />
