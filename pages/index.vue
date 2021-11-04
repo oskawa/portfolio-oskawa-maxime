@@ -360,7 +360,7 @@ export default {
             }, 2000);
           }
 
-          this.test = this.bar.toString();
+          this.test = bar.toString();
         }
       );
 
