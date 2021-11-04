@@ -345,13 +345,13 @@ export default {
           });
         },
         (xhr) => {
-           var totalSize = 15073008;
+           var totalSize = 21201140;
           console.log(xhr.total)
           const loadbar = document.getElementById("bar");
           const visibilityLoader = document.querySelector(".loadingScreen");
 
           const bar = Math.floor((250 * xhr.loaded) / totalSize);
-
+          const percentage = (xhr.loaded / totalSize * 100)
           console.log(bar);
           loadbar.style.width = bar + "px";
 
@@ -362,7 +362,7 @@ export default {
             }, 2000);
           }
 
-          this.test = bar.toString();
+          this.test = percentage.toString();
         }
       );
 
