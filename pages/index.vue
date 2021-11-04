@@ -351,7 +351,7 @@ export default {
           const visibilityLoader = document.querySelector(".loadingScreen");
         
           this.bar = Math.floor((250 * xhr.loaded) / xhr.total);
-          
+          console.log(this.bar)
           loadbar.style.width = this.bar+"px";
           
 
