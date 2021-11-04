@@ -101,6 +101,18 @@
 <script>
 import axios from "axios";
 export default {
+  head(){
+    return{
+      title: "Portfolio Maxime Eloir - Contact",
+      meta: [
+        {
+          name: "description",
+          content: "My portfolio ! A selection of print & web projects and missions carried out during my studies and my business.",
+          hid: "description",
+        },
+      ],
+    }
+  },
   layout: "black",
   data() {
     return {
