@@ -107,7 +107,7 @@ export default {
       meta: [
         {
           name: "description",
-          content: "My portfolio ! A selection of print & web projects and missions carried out during my studies and my business.",
+          content: "You can contact me if you want to collaborate :)",
           hid: "description",
         },
       ],
