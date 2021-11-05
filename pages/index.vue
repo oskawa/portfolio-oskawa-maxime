@@ -1,69 +1,88 @@
 <template>
   <div class="">
-    <div class="loadingScreen">
-      <div id="loader" class="loader">
-        <div id="progressBar">
-          <div id="bar"></div>
-          <p id="progressText">{{ test }}</p>
+    <div v-if="!isMobile()">
+      <div class="loadingScreen">
+        <div id="loader" class="loader">
+          <div id="progressBar">
+            <div id="bar"></div>
+            <p id="progressText">{{ test }}</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div id="canvas1"></div>
-    <div v-if="!isHidden" class="container">
-      <div class="row align-content-center" style="height: 100vh">
-        <div class="col-12 col-lg-6" style="z-index: 100">
-          <img src="/logo/logo_white.svg" />
-          <h1 id="sous_titre">Graphist || Web Developer</h1>
-          <button @click="initCamera" class="btn_stroke_white">
-            See my projects
-          </button>
-          <p>{{ object_ID }}</p>
+      <div id="canvas1"></div>
+      <div v-if="!isHidden" class="container">
+        <div class="row align-content-center" style="height: 100vh">
+          <div class="col-12 col-lg-6" style="z-index: 100">
+            <img src="/logo/logo_white.svg" />
+            <h1 id="sous_titre">Graphist || Web Developer</h1>
+            <button @click="initCamera" class="btn_stroke_white">
+              See my projects
+            </button>
+            <p>{{ object_ID }}</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="container" style="height: 100vh">
-      <div class="row h-100 align-content-center">
-        <div
-          v-bind:class="{ translation: showInformation }"
-          v-bind:style="[
-            showInformation
-              ? { visibility: 'visible' }
-              : { visibility: 'hidden' },
-          ]"
-          class="col-12 col-lg-6 bloc_Blanc"
-        ></div>
-        <div
-          v-if="showInformation"
-          v-bind:class="{ leftTranslation: showInformation }"
-          v-bind:style="[
-            showInformation
-              ? { visibility: 'visible' }
-              : { visibility: 'hidden' },
-          ]"
-          id="bloc_left"
-          class="left"
-        >
-          <h2 id="titre_Projects">{{ informationsProjets.Titre }}</h2>
-          <h3 id="soustitre_Projects">
-            {{ informationsProjets.TypeDeProjet }}
-          </h3>
-          <p id="paragraphe_Projects">{{ informationsProjets.Descriptif }}</p>
-
-          <nuxt-link
-            v-for="lien in lienProjets"
-            :key="lien.id"
-            :to="`/projects/${lien.id}`"
-            class="project_link"
+      <div class="container" style="height: 100vh">
+        <div class="row h-100 align-content-center">
+          <div
+            v-bind:class="{ translation: showInformation }"
+            v-bind:style="[
+              showInformation
+                ? { visibility: 'visible' }
+                : { visibility: 'hidden' },
+            ]"
+            class="col-12 col-lg-6 bloc_Blanc"
+          ></div>
+          <div
+            v-if="showInformation"
+            v-bind:class="{ leftTranslation: showInformation }"
+            v-bind:style="[
+              showInformation
+                ? { visibility: 'visible' }
+                : { visibility: 'hidden' },
+            ]"
+            id="bloc_left"
+            class="left"
           >
-            {{ lien.titreDuProjet }}
-          </nuxt-link>
+            <h2 id="titre_Projects">{{ informationsProjets.Titre }}</h2>
+            <h3 id="soustitre_Projects">
+              {{ informationsProjets.TypeDeProjet }}
+            </h3>
+            <p id="paragraphe_Projects">{{ informationsProjets.Descriptif }}</p>
+
+            <nuxt-link
+              v-for="lien in lienProjets"
+              :key="lien.id"
+              :to="`/projects/${lien.id}`"
+              class="project_link"
+            >
+              {{ lien.titreDuProjet }}
+            </nuxt-link>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div v-if="showInformation" id="backToCamera" @click="returnToCamera">
-      <p>Retour aux projets</p>
+      <div v-if="showInformation" id="backToCamera" @click="returnToCamera">
+        <p>Retour aux projets</p>
+      </div>
+    </div>
+    <div v-else>
+      <div class="mobileContainer">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <img src="logo/logo_white.svg" alt="" />
+              <h2>Please visit my website on a larger screen :)</h2>
+
+              <div class="liensClass">
+                <nuxt-link class="mobileLiens" to="/about">About</nuxt-link>
+                <nuxt-link class="mobileLiens" to="/contact">Contact</nuxt-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -276,13 +295,16 @@ export default {
   destroyed() {
     this.renderer.domElement = null;
     this.renderer = null;
-    document.body.style.overflow = "auto"
+    document.body.style.overflow = "initial";
   },
   mounted() {
-    document.body.style.overflow = "hidden"
-    this.init();
-    if (!this.show) {
+    document.body.style.overflow = "hidden";
+    if (!this.isMobile()) {
+      console.log(this.isMobile());
+      this.init();
       this.animate();
+    }
+    if (!this.show) {
     }
   },
   watch: {
@@ -291,6 +313,17 @@ export default {
     },
   },
   methods: {
+    isMobile() {
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        )
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     init() {
       this.scene = new THREE.Scene();
       this.renderer = new THREE.WebGLRenderer({});
@@ -675,5 +708,35 @@ h2 {
   font-weight: 200;
   color: white;
   font-family: "Open Sans", sans-serif;
+}
+.mobileContainer {
+  height: 100vh;
+  width: 100%;
+  background-color: #181818;
+  .container {
+    height: 100%;
+    .row {
+      height: 100%;
+      align-content: center;
+      img {
+        margin-bottom: 2rem;
+      }
+      h2 {
+        color: white;
+        text-align: center;
+        font-weight: 300;
+      }
+    }
+  }
+}
+.liensClass {
+  margin-top:2rem;
+  display: inline-grid;
+  width: 100%;
+  .mobileLiens {
+    margin-bottom: 1rem;
+    color:white;
+    text-align: center;
+  }
 }
 </style>
