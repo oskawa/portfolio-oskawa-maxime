@@ -104,6 +104,7 @@ export default {
       object_ID: null,
       targetPosition: null,
       cameraRotation: null,
+      hide: false,
       informationsProjets: {
         Titre: "",
         TypeDeProjet: "",
@@ -260,19 +261,32 @@ export default {
   },
   head() {
     return {
-      title: "Homepage",
-
+      title: "Portfolio Maxime Eloir - Homepage",
       meta: [
         {
           name: "description",
-          content: "Homepage for the portfolio of Maxime Eloir",
+          content:
+            "My portfolio ! A selection of print & web projects and missions carried out during my studies and my business.",
           hid: "description",
         },
       ],
     };
   },
+  destroyed() {
+    
+    this.renderer.domElement = null;
+    this.renderer = null;
+  },
   mounted() {
     this.init();
+    if (!this.show) {
+      this.animate();
+    }
+  },
+  watch: {
+    $route(to, from) {
+      this.hide = true;
+    },
   },
   methods: {
     init() {
@@ -289,7 +303,6 @@ export default {
       this.renderer.domElement.style.position = "fixed";
       this.renderer.domElement.style.top = "0px";
       this.renderer.domElement.style.zIndex = "10";
-      
 
       this.camera = new THREE.PerspectiveCamera(
         50,
@@ -301,8 +314,6 @@ export default {
       this.camera.rotation.set(0, 0.3, 0);
 
       this.clock = new THREE.Clock();
-
-      console.log(this.scene);
 
       // new RGBELoader()
       //   .setDataType(THREE.UnsignedByteType)
@@ -346,14 +357,14 @@ export default {
           });
         },
         (xhr) => {
-           var totalSize = 21201140;
-          console.log(xhr.total)
+          var totalSize = 21201140;
+
           const loadbar = document.getElementById("bar");
           const visibilityLoader = document.querySelector(".loadingScreen");
 
           const bar = Math.floor((250 * xhr.loaded) / totalSize);
-          const percentage = (xhr.loaded / totalSize * 100)
-          console.log(bar);
+          const percentage = (xhr.loaded / totalSize) * 100;
+
           loadbar.style.width = bar + "px";
 
           if (bar == 250) {
@@ -373,7 +384,7 @@ export default {
       this.labelRenderer.domElement.style.position = "absolute";
       this.labelRenderer.domElement.style.top = "0px";
       this.labelRenderer.domElement.style.zIndex = "11";
-      this.labelRenderer.domElement.style.visibility = "hidden"
+      this.labelRenderer.domElement.style.visibility = "hidden";
 
       const directional = new THREE.DirectionalLight(0xffffbb, 1);
       directional.position.set(0, 600, 600);
@@ -403,17 +414,16 @@ export default {
       document
         .getElementById("canvas1")
         .appendChild(this.labelRenderer.domElement);
-
-      this.animate();
     },
     animate() {
       TWEEN.update();
-      requestAnimationFrame(this.animate);
+      //
       this.renderer.render(this.scene, this.camera);
       this.labelRenderer.render(this.scene, this.camera);
       var delta = this.clock.getDelta();
 
       if (this.mixer) this.mixer.update(delta);
+      requestAnimationFrame(this.animate);
     },
     onWindowResize() {
       this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -509,7 +519,7 @@ export default {
       this.cameraRotation = new THREE.Vector3(0, 0, 0);
       this.tweenCamera1(this.cameraRotation, duration);
       this.isHidden = true;
-      this.labelRenderer.domElement.style.visibility = "visible"
+      this.labelRenderer.domElement.style.visibility = "visible";
       document.getElementById("__layout").style.zIndex = "0";
     },
     returnToCamera() {
@@ -669,6 +679,4 @@ h2 {
   font-weight: 200;
   color: white;
 }
-
-
 </style>

@@ -129,7 +129,9 @@ export default {
       message: "",
     };
   },
+
   mounted() {
+    
     let one = "https://back-portf.herokuapp.com/contact/";
 
     const requestOne = axios.get(one);

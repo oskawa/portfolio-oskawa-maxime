@@ -53,7 +53,7 @@ export default {
       .then(
         axios.spread((...responses) => {
           const responseOne = responses[0];
-          console.log(responseOne);
+        
           this.logo = responseOne.data.logoPrincipal.url;
           this.reseauxLink = responseOne.data.Icones;
 
