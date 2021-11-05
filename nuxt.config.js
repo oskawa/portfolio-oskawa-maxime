@@ -33,7 +33,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    '@nuxtjs/google-fonts'
+    '@nuxtjs/google-fonts',  '@nuxtjs/google-analytics'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -54,6 +54,15 @@ export default {
         wght: [300, 400, 500, 600, 700],
         
       },
+    }
+  },
+
+  googleAnalytics: {
+   id : process.env.GOOGLE_ANALYTICS_ID
+  },
+  publicRuntimeConfig: {
+    googleAnalytics: {
+      id: process.env.GOOGLE_ANALYTICS_ID
     }
   },
 
