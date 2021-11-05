@@ -2,10 +2,10 @@
   <div id="contact">
     <div class="container">
       <div class="row">
-        <div class="col-lg-5 offset-md-1 col-12 imageLeft">
+        <div class="col-lg-5 col-12 imageLeft">
           <img :src="`${img}`" />
         </div>
-        <div class="col-lg-6 col-12 texteRight">
+        <div class="col-md-1 col-lg-6 col-12 texteRight">
           <h1>{{ title }}</h1>
           <!-- First, we make sure we don't have a bot -->
           <div v-if="isBot" class="">
@@ -23,7 +23,7 @@
                 Bummer, Something went wrong. Did you fill out all of the
                 fields?
               </div>
-              <div>
+              <div class="labelInput">
                 <label for="full_name" class="">Full name*</label>
 
                 <input
@@ -32,12 +32,12 @@
                   name="name"
                   id="full_name"
                   class="form-input"
-                  placeholder="Full name*"
+                 
                 />
               </div>
               <!-- The whole field and label is set to display hidden with Tailwind CSS -->
 
-              <div>
+              <div class="labelInput"> 
                 <label for="email">Email*</label>
 
                 <input
@@ -47,10 +47,10 @@
                   id="email"
                   type="email"
                   class=""
-                  placeholder="Email*"
+                  
                 />
               </div>
-              <div>
+              <div class="labelInput">
                 <label for="phone">Phone</label>
 
                 <input
@@ -58,10 +58,10 @@
                   name="phone"
                   id="phone"
                   class="form-input"
-                  placeholder="Phone"
+                 
                 />
               </div>
-              <div>
+              <div class="labelInput">
                 <label for="message">Message</label>
 
                 <textarea
@@ -71,7 +71,7 @@
                   id="message"
                   rows="4"
                   class="form-input"
-                  placeholder="Message*"
+                  
                 ></textarea>
               </div>
               <div class="invisible">
@@ -187,6 +187,7 @@ export default {
 
 <style lang="scss">
 #contact {
+  margin-top:5rem;
   h1 {
     font-family: "Open Sans", sans-serif;
     font-weight: 800;
@@ -208,6 +209,10 @@ export default {
     border-bottom: 1px solid black;
     width: 100%;
   }
+  input:focus{
+    border:none;
+    outline:none;
+  }
  
   img {
     width: 100%;
@@ -219,7 +224,7 @@ export default {
     &:before {
       content: "";
       position: absolute;
-      bottom: -30px;
+      bottom: -10px;
       left: -20px;
       right: -20px;
       height: 550px;
@@ -228,5 +233,8 @@ export default {
       background-color: #2e475e;
     }
   }
+}
+.labelInput{
+  margin-bottom:1rem;
 }
 </style>

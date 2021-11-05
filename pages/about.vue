@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-12 col-lg-5 zIndex_about">
             <h1 data-aos="fade-right" data-aos-duration="1500">{{ title }}</h1>
-            <p>{{ presentation }}</p>
+            <p v-html="presentation"></p>
           </div>
           <div class="col-12 col-lg-5 offset-md-1 col_about">
             <img :src="`${img1}`" alt="" class="img_About" />
@@ -18,8 +18,8 @@
       <div class="container">
         <div class="row">
           <div
-            class="col-12 col-lg-5"
-            v-bind:class="{ colExperiences: isActive }"
+            class="col-12 col-lg-5 colExperiences"
+            
           >
             <img
               v-for="experience in experiences"
@@ -46,10 +46,10 @@
                       <span class="rond"></span>
                     </div>
                   </button>
-                  <div>
-                    <p v-if="experience.active">
-                      {{ experience.descriptionExperience }}
-                    </p>
+                  <div v-if="experience.active" >
+                    <p v-html="experience.descriptionExperience"></p>
+                      
+                   
                   </div>
                 </div>
               </li>
@@ -64,19 +64,19 @@
 <script>
 import axios from "axios";
 export default {
-  
   layout: "black",
-   head(){
-    return{
+  head() {
+    return {
       title: "Portfolio Maxime Eloir - About",
       meta: [
         {
           name: "description",
-          content: "My portfolio ! A selection of print & web projects and missions carried out during my studies and my business.",
+          content:
+            "My portfolio ! A selection of print & web projects and missions carried out during my studies and my business.",
           hid: "description",
         },
       ],
-    }
+    };
   },
   data() {
     return {
@@ -215,6 +215,22 @@ button {
     font-family: "Open Sans", sans-serif;
     font-size: 15px;
     line-height: 1.4;
+  }
+}
+#experiences {
+  h2 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    margin-bottom: 2rem;
+  }
+  .texte{
+    .accordeon{
+      margin-bottom: 1rem;
+    }
+    p{
+      margin-top:1rem;
+    }
   }
 }
 </style>

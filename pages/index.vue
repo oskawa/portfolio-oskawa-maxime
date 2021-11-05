@@ -14,7 +14,7 @@
         <div class="col-12 col-lg-6" style="z-index: 100">
           <img src="/logo/logo_white.svg" />
           <h1 id="sous_titre">Graphist || Web Developer</h1>
-          <button @click="initCamera" class="btn_stroke">
+          <button @click="initCamera" class="btn_stroke_white">
             See my projects
           </button>
           <p>{{ object_ID }}</p>
@@ -68,6 +68,8 @@
   </div>
 </template>
 
+
+
 <script>
 import * as THREE from "three/build/three.module";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -110,7 +112,6 @@ export default {
         TypeDeProjet: "",
         Description: "",
       },
-
       arrayProject: [
         {
           name: "globe",
@@ -273,11 +274,12 @@ export default {
     };
   },
   destroyed() {
-    
     this.renderer.domElement = null;
     this.renderer = null;
+    document.body.style.overflow = "auto"
   },
   mounted() {
+    document.body.style.overflow = "hidden"
     this.init();
     if (!this.show) {
       this.animate();
@@ -292,7 +294,6 @@ export default {
     init() {
       this.scene = new THREE.Scene();
       this.renderer = new THREE.WebGLRenderer({});
-
       this.renderer.setPixelRatio(window.devicePixelRatio);
       this.renderer.setSize(window.innerWidth, window.innerHeight);
       this.renderer.shadowMap.enabled = true;
@@ -645,17 +646,6 @@ body {
   height: 20px;
   cursor: pointer;
 }
-.btn_stroke {
-  color: white;
-  border-color: white;
-  background: linear-gradient(to right, #fff, #fff);
-  background-repeat: no-repeat;
-  background-size: 0 100%;
-  transition: background-size 0.6s 0s;
-  width: auto;
-  border: 3px solid white;
-  padding: 0.5rem 2rem;
-}
 
 .project_link {
   background-color: #f3db12;
@@ -663,6 +653,12 @@ body {
   padding: 0.5rem 4rem;
   display: table;
   margin-bottom: 0.5rem;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    text-decoration: none;
+    background-color: #fae525;
+  }
 }
 h3 {
   font-family: "Open Sans", sans-serif;
@@ -678,5 +674,6 @@ h2 {
   font-size: 16px;
   font-weight: 200;
   color: white;
+  font-family: "Open Sans", sans-serif;
 }
 </style>

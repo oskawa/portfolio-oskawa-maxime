@@ -4,9 +4,7 @@
       <div class="container">
         <div class="row justify-content-between">
           <div class="col-3">
-            <nuxt-link to="/">
-              <img :src="`${logo}`" />
-            </nuxt-link>
+           
           </div>
           <div class="col-lg-9 text-end" style="text-align:end">
             <div class="menu d-none d-lg-block">
