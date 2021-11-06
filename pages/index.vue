@@ -302,6 +302,7 @@ export default {
     if (!this.isMobile()) {
       console.log(this.isMobile());
       this.init();
+      window.addEventListener("resize", this.onWindowResize);
       this.animate();
     }
     if (!this.show) {
@@ -442,7 +443,9 @@ export default {
       this.light.castShadow = true;
       this.scene.add(this.light);
 
-      window.addEventListener("resize", this.onWindowResize);
+
+
+      
 
       document.getElementById("canvas1").appendChild(this.renderer.domElement);
       document
