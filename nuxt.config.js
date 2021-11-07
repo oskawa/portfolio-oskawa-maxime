@@ -1,11 +1,11 @@
 export default {
- 
+
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'project-front',
+    title: 'Portfolio Maxime Eloir',
     htmlAttrs: {
       lang: 'en'
     },
@@ -17,6 +17,9 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+
     ]
   },
 
@@ -26,6 +29,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: "~/plugins/gsap.client" }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -33,32 +37,55 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    '@nuxtjs/google-fonts',  '@nuxtjs/google-analytics'
+    '@nuxtjs/google-fonts', '@nuxtjs/google-analytics'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+
     // https://go.nuxtjs.dev/bootstrap
-    
+
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
+  gsap: {
+    registerEffect:[
+      {
+        name:'fadeIn',
+      effect: () =>{
+        const gsap = this.$gsap;
+      gsap.set(".follow", { xPercent: -50, yPercent: -50 });
+      gsap.set(".cursor", { xPercent: -50, yPercent: -50 });
+  
+      var follow = document.querySelector('.follow')
+      var cursor = document.querySelector('.cursor')
+  
+      window.addEventListener('mousemove', e => {
+        gsap.to(cursor, 0.2, { x: e.clientX, y: e.clientY })
+        gsap.to(follow, 0.9, { x: e.clientX, y: e.clientY })
+      })
+    }
+    }
+    ]
+    
+
+  },
 
   googleFonts: {
     families: {
-      
+
       'Open+Sans': {
         wght: [300, 400, 500, 600, 700],
-        
+
       },
     }
   },
 
   googleAnalytics: {
-   id : process.env.GOOGLE_ANALYTICS_ID
+    id: process.env.GOOGLE_ANALYTICS_ID
   },
   publicRuntimeConfig: {
     googleAnalytics: {
@@ -69,5 +96,5 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
- 
+
 }

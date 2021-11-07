@@ -1,12 +1,14 @@
 <template>
   <div class="app">
+    <div class="cursor"></div>
+    <div class="follow"></div>
+      
+    
     <header class="fixed-lg-top">
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col-3">
-           
-          </div>
-          <div class="col-lg-9 text-end" style="text-align:end">
+          <div class="col-3"></div>
+          <div class="col-lg-9 text-end" style="text-align: end">
             <div class="menu d-none d-lg-block">
               <div class="container">
                 <nuxt-link class="liens" to="/about">About</nuxt-link>
@@ -42,8 +44,10 @@ export default {
     };
   },
   mounted() {
+    this.$mouse()
+  
     let one = "https://back-portf.herokuapp.com/options";
-
+    
     const requestOne = axios.get(one);
 
     axios
@@ -51,7 +55,7 @@ export default {
       .then(
         axios.spread((...responses) => {
           const responseOne = responses[0];
-          
+
           this.logo = responseOne.data.logoPrincipal.url;
           this.reseauxLink = responseOne.data.Icones;
 
@@ -62,18 +66,45 @@ export default {
         // react on errors.
       });
   },
+  methods: {
+    
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+*{cursor:none}
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgb(230, 230, 230);
+  z-index: 300;
+  pointer-events: none;
+
+}
+.follow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  z-index: 299;
+  border: rgb(230, 230, 230) 1px solid;
+  border-radius: 50%;
+  pointer-events: none;
+}
 .col-3,
 .col-lg-9 {
   z-index: 110;
 }
 
-.col-lg-9.text-end{
-  z-index:110;
-  text-align:end;
+.col-lg-9.text-end {
+  z-index: 110;
+  text-align: end;
 }
 header {
   padding: 2rem 0 0 0;
