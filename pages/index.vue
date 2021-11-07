@@ -76,7 +76,7 @@
               <h2>Please visit my website on a larger screen :)</h2>
 
               <div class="liensClass">
-                <nuxt-link class="mobileLiens" to="/projects">Projects</nuxt-link>
+                <nuxt-link class="mobileLiens" to="/project">Projects</nuxt-link>
                 <nuxt-link class="mobileLiens" to="/about">About</nuxt-link>
                 <nuxt-link class="mobileLiens" to="/contact">Contact</nuxt-link>
               </div>

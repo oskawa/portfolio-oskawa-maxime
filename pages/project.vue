@@ -9,16 +9,15 @@
           <div class="p-1">
             <h2>{{ data.Titre }}</h2>
             <h3>{{ data.descriptifCategory }}</h3>
-            <p v-for="projet in data.projects" :key="projet.id">
-              <nuxt-link
-                
+            
+              <nuxt-link v-for="projet in data.projects" :key="projet.id"
                 :to="`/projects/${projet.id}`"
                 class="project_link"
               >
-                {{ projet.titreDuProjet }}
+               <p> {{ projet.titreDuProjet }}</p>
               </nuxt-link>
              
-            </p>
+            
           </div>
         </div>
       </div>

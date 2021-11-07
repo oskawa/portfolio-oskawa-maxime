@@ -8,7 +8,7 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-           <nuxt-link to="/">
+            <nuxt-link to="/">
               <p>Return to projects</p>
             </nuxt-link>
             <div class="desc">
@@ -23,7 +23,6 @@
         </div>
       </div>
     </div>
-  
   </div>
 </template>
 
@@ -44,7 +43,7 @@ export default {
     };
   },
   mounted() {
-     document.body.style.overflow = "initial";
+    document.body.style.overflow = "initial";
     axios
       .get(`https://back-portf.herokuapp.com/projects/${this.id}`)
       .then((response) => {
@@ -63,15 +62,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-a{
-  color: black;
-  font-family: 'Open Sans';
-  p{
-    margin-bottom: 1rem;
-    margin-left:1rem;
 
+a {
+  color: black;
+  font-family: "Open Sans";
+  p {
+    margin-bottom: 1rem;
+    margin-left: 1rem;
   }
-  &:hover{
+  &:hover {
     text-decoration: none;
   }
 }
@@ -107,5 +106,11 @@ p {
 }
 .img img {
   width: 100%;
+}
+
+@media (max-width: 767px) {
+  #projet .container .desc {
+    padding: 0;
+  }
 }
 </style>
