@@ -99,6 +99,7 @@ export default {
     },
   },
   mounted() {
+     document.body.style.overflow = "initial";
     axios
       .get("https://back-portf.herokuapp.com/about")
       .then((responses) => {

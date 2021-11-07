@@ -295,7 +295,7 @@ export default {
   destroyed() {
     this.renderer.domElement = null;
     this.renderer = null;
-    document.body.style.overflow = "initial";
+   
   },
   mounted() {
     document.body.style.overflow = "hidden";

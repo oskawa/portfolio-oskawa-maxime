@@ -131,7 +131,7 @@ export default {
   },
 
   mounted() {
-    
+     document.body.style.overflow = "initial";
     let one = "https://back-portf.herokuapp.com/contact/";
 
     const requestOne = axios.get(one);
