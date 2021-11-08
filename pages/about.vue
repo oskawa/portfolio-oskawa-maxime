@@ -81,7 +81,7 @@ export default {
         {
           name: "description",
           content:
-            "My portfolio ! A selection of print & web projects and missions carried out during my studies and my business.",
+            "Discover the cursus of Maxime Eloir : why you need to choose him, why you need to have his smile in your business !",
           hid: "description",
         },
       ],
