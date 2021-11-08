@@ -1,9 +1,24 @@
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+
 
 
 export default ({app}, inject) => {
+
  inject('mouse', () => {
-   
+
+  let line1 = document.getElementById('scroll')
+  if (line1){
+    window.onscroll = ()=>{
+      let pos = window.scrollY * 2.5
+      console.log(pos)
+      line1.style.left = `${pos}px`
+      
+    }
+       
+  }
+
 
 
   var follow =  document.querySelector('.follow')

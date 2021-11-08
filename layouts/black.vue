@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+  
     <div class="cursor"></div>
     <div class="follow"></div>
     <header class="fixed-lg-top">
@@ -33,6 +34,7 @@
       </div>
     </header>
     <nuxt />
+    <div id="scroll"></div>
   </div>
 </template>
 

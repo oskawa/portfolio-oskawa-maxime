@@ -2,6 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
+        <h1>Liste des projets</h1>
         <div v-for="data in dataFetch" :key="data.id" class="dataCat">
           <div class="imgCat">
             <img :src="`${data.image.url}`" alt="" />
@@ -9,15 +10,15 @@
           <div class="p-1">
             <h2>{{ data.Titre }}</h2>
             <h3>{{ data.descriptifCategory }}</h3>
-            
-              <nuxt-link v-for="projet in data.projects" :key="projet.id"
-                :to="`/projects/${projet.id}`"
-                class="project_link"
-              >
-               <p> {{ projet.titreDuProjet }}</p>
-              </nuxt-link>
-             
-            
+
+            <nuxt-link
+              v-for="projet in data.projects"
+              :key="projet.id"
+              :to="`/projects/${projet.id}`"
+              class="project_link"
+            >
+              <p>{{ projet.titreDuProjet }}</p>
+            </nuxt-link>
           </div>
         </div>
       </div>
@@ -26,7 +27,6 @@
 </template>
 
 <script>
-
 import axios from "axios";
 export default {
   data() {
@@ -35,9 +35,8 @@ export default {
     };
   },
   mounted() {
-    
     this.fetchDataCategory();
-       document.body.style.overflow = "initial";
+    document.body.style.overflow = "initial";
   },
   methods: {
     fetchDataCategory() {
@@ -53,6 +52,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.container .row .col-12 h1{
+   font-family: "Open Sans";
+    font-weight: 700;
+}
 .dataCat {
   margin-bottom: 2rem;
   border-radius: 20px 20px 0 0;
@@ -68,12 +71,24 @@ export default {
     font-weight: 400;
     font-size: 15px;
     text-align: justify;
+    margin-bottom: 1rem;
   }
   .imgCat {
     img {
       border-radius: 20px 20px 0 0;
       width: 100%;
     }
+  }
+  a{
+    color:black;
+    margin-top: 0.7rem;
+    p{
+      padding: 1rem;
+    background-color: rgb(235, 235, 235);
+    border-radius: 15px;
+    font-weight: 600;
+    }
+    
   }
 }
 </style>

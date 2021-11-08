@@ -31,6 +31,7 @@
       </div>
     </header>
     <nuxt />
+    <div id="scroll"></div>
   </div>
 </template>
 

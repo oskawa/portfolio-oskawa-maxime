@@ -14,13 +14,24 @@
       </div>
     </div>
 
+    <div id="competences">
+      <div class="container-fluid">
+        <div class="row">
+          <div id="scroll" class="wrapper text">
+            <p>
+              <svg>
+                <text x="0" y="100">AdobeXD Wordpress NuxtJS NodeJS Javascript Figma Php </text>
+              </svg>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="experiences">
       <div class="container">
         <div class="row">
-          <div
-            class="col-12 col-lg-5 colExperiences"
-            
-          >
+          <div class="col-12 col-lg-5 colExperiences">
             <img
               v-for="experience in experiences"
               :key="experience.id"
@@ -46,10 +57,8 @@
                       <span class="rond"></span>
                     </div>
                   </button>
-                  <div v-if="experience.active" >
+                  <div v-if="experience.active">
                     <p v-html="experience.descriptionExperience"></p>
-                      
-                   
                   </div>
                 </div>
               </li>
@@ -99,7 +108,9 @@ export default {
     },
   },
   mounted() {
-     document.body.style.overflow = "initial";
+    document.body.style.overflowY = "initial";
+    document.body.style.overflowX = 'hidden';
+    
     axios
       .get("https://back-portf.herokuapp.com/about")
       .then((responses) => {
@@ -119,6 +130,30 @@ export default {
 </script>
 
 <style lang="scss">
+#competences {
+  margin: 3rem 0;
+  position: relative;
+  height: 100px;
+  #scroll {
+    position: absolute;
+    left: -100px;
+    p {
+      font-family: "Open Sans";
+      font-weight: 800;
+      font-size: 50px;
+      svg {
+        display: block;
+        width:100%;
+        text {
+          fill: white;
+          stroke: black;
+          stroke-width: 1;
+        }
+      }
+    }
+  }
+}
+
 .col_about {
   &:before {
     content: "";
@@ -225,12 +260,12 @@ button {
     font-size: 30px;
     margin-bottom: 2rem;
   }
-  .texte{
-    .accordeon{
+  .texte {
+    .accordeon {
       margin-bottom: 1rem;
     }
-    p{
-      margin-top:1rem;
+    p {
+      margin-top: 1rem;
     }
   }
 }
