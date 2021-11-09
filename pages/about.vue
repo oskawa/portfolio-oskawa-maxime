@@ -137,6 +137,7 @@ export default {
   #scroll {
     position: absolute;
     left: -100px;
+    width:100%;
     p {
       font-family: "Open Sans";
       font-weight: 800;
