@@ -285,6 +285,7 @@ export default {
       title: "Portfolio Maxime Eloir - Homepage",
       meta: [
         {
+          hid: 'description',
           name: "description",
           content:
             "My portfolio ! A selection of print & web projects and missions carried out during my studies and my business.",
