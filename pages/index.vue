@@ -49,7 +49,7 @@
             <h3 id="soustitre_Projects">
               {{ informationsProjets.TypeDeProjet }}
             </h3>
-            <p id="paragraphe_Projects">{{ informationsProjets.Descriptif }}</p>
+            <p id="paragraphe_Projects" v-html="informationsProjets.Descriptif"></p>
 
             <nuxt-link
               v-for="lien in lienProjets"
@@ -64,7 +64,7 @@
       </div>
 
       <div v-if="showInformation" id="backToCamera" @click="returnToCamera">
-        <p>Retour aux projets</p>
+        <p>Back to projects</p>
       </div>
     </div>
     <div v-else>
