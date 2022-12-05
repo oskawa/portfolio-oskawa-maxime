@@ -16,6 +16,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
+    - name: Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        server: ftp.gdwk2805.odns.fr
+        username: meloir@maxime-eloir.fr
+        password: $({ secrets.ftp_password})
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
