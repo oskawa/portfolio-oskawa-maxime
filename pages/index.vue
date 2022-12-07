@@ -57,7 +57,7 @@
               :to="`/projects/${lien.id}`"
               class="project_link"
             >
-              {{ lien.titreDuProjet }}
+              {{ lien.title.rendered }}
             </nuxt-link>
           </div>
         </div>
@@ -524,6 +524,7 @@ export default {
       this.showInformation = true;
       this.object_ID = event.currentTarget.id;
       this.fetchDataCategory(this.object_ID);
+      console.log(this.object_ID)
       const found = this.arrayProject.find((x) => x.name === this.object_ID);
 
       this.targetPosition = new THREE.Vector3(
@@ -543,14 +544,23 @@ export default {
     },
     fetchDataCategory(id) {
       axios
-        .get(`https://back-portf.herokuapp.com/categorypourprojets/${id}`)
+        .get(process.env.wordpressAPI + 'wp/v2/categories?slug=' + id)
         .then((response) => {
-          this.lienProjets = response.data.projects;
+          console.log(response)
+          let category_id = response.data[0].id
+          
           this.informationsProjets = {
-            Titre: response.data.Titre,
-            TypeDeProjet: response.data.typeDeProjet,
-            Descriptif: response.data.descriptifCategory,
+            Titre: response.data[0].name,
+            TypeDeProjet: response.data[0].acf.type_de_projet,
+            Descriptif: response.data[0].acf.descriptif_du_projet,
           };
+          axios
+        .get(process.env.wordpressAPI + 'wp/v2/portfolio?categories=' + category_id)
+        .then((response)=>{
+          console.log(response)
+          this.lienProjets = response.data;
+        })
+
         });
     },
     initCamera() {

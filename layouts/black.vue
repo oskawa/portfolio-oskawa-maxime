@@ -8,7 +8,7 @@
         <div class="row justify-content-between">
           <div class="col-3">
             <nuxt-link to="/">
-              <img :src="`${logo}`" />
+              <img class="logo-header" :src="`${logo}`" />
             </nuxt-link>
           </div>
           <div class="col-lg-9 text-end" style="text-align: end">
@@ -18,10 +18,10 @@
                 <nuxt-link class="liens" to="/contact">Contact</nuxt-link>
                 <ul class="pictoUl">
                   <li v-for="link in reseauxLink" :key="link.id">
-                    <a :href="`${link.LienVersSite}`">
+                    <a :href="`${link.reseau_url}`">
                       <img
-                        :src="`${link.ImageVersSite.url}`"
-                        :alt="`${link.ImageVersSite.alternativeText}`"
+                        :src="`${link.reseau_image.url}`"
+                        :alt="`${link.reseau_image.alt}`"
                       />
                     </a>
                   </li>
@@ -50,7 +50,7 @@ export default {
   },
   mounted() {
    this.$mouse()
-    let one = "https://back-portf.herokuapp.com/options";
+    let one = "https://portfolioapi.local/wp-json/acf/v3/options/options";
 
     const requestOne = axios.get(one);
 
@@ -58,10 +58,13 @@ export default {
       .all([requestOne])
       .then(
         axios.spread((...responses) => {
-          const responseOne = responses[0];
+          const responseOne = responses[0].data.acf;
+          console.log(responseOne)
 
-          this.logo = responseOne.data.logoPrincipal.url;
-          this.reseauxLink = responseOne.data.Icones;
+          this.logo = responseOne.logo_principal;
+          console.log(this.logo)
+          this.reseauxLink = responseOne.icones;
+          console.log(this.reseauxLink)
 
           // use/access the results
         })
@@ -156,6 +159,9 @@ header {
         }
       }
     }
+  }
+  .logo-header{
+    max-height: 40px;
   }
 }
 </style>

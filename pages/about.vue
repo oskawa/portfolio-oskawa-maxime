@@ -36,7 +36,7 @@
               v-for="experience in experiences"
               :key="experience.id"
               v-show="experience.active"
-              :src="`${experience.imageprofessionnel.url}`"
+              :src="`${experience.image_associee.url}`"
               alt=""
               class="imgExperiences"
             />
@@ -51,14 +51,14 @@
                     v-on:click="toggleActive(experience)"
                     class="accordeon"
                   >
-                    <h3>{{ experience.TitreExperience }}</h3>
+                    <h3>{{ experience.titre_de_lexperience }}</h3>
                     <div class="separation">
                       <span class="ligne"></span>
                       <span class="rond"></span>
                     </div>
                   </button>
                   <div v-if="experience.active">
-                    <p v-html="experience.descriptionExperience"></p>
+                    <p v-html="experience.description_de_lexperience"></p>
                   </div>
                 </div>
               </li>
@@ -110,16 +110,18 @@ export default {
   mounted() {
     document.body.style.overflowY = "initial";
     document.body.style.overflowX = 'hidden';
-    
+    console.log(process.env.wordpressAPI + "wp/v2/pages/40")
     axios
-      .get("https://back-portf.herokuapp.com/about")
+      .get(process.env.wordpressAPI + "wp/v2/pages/40")
       .then((responses) => {
+        console.log(responses)
         const responseOne = responses;
-        this.title = responseOne.data.Titre;
-        this.presentation = responseOne.data.Presentation;
-        this.img1 = responseOne.data.ImageADroite.url;
-        this.titleExperiences = responseOne.data.Sectionexperiences;
-        this.experiences = responseOne.data.Experiences;
+        console.log(responseOne.data.acf)
+        this.title = responseOne.data.title.rendered;
+        this.presentation = responseOne.data.acf.texte_de_presentation;
+        this.img1 = responseOne.data.acf.image_de_profil.url;
+        // this.titleExperiences = responseOne.data.Sectionexperiences;
+        this.experiences = responseOne.data.acf.experiences_professionnelles;
       })
 
       .catch((errors) => {

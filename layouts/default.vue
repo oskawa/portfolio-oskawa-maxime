@@ -14,11 +14,11 @@
                 <nuxt-link class="liens" to="/about">About</nuxt-link>
                 <nuxt-link class="liens" to="/contact">Contact</nuxt-link>
                 <ul class="pictoUl">
-                  <li v-for="link in reseauxLink" :key="link.id">
-                    <a :href="`${link.LienVersSite}`">
+                 <li v-for="link in reseauxLink" :key="link.id">
+                    <a :href="`${link.reseau_url}`">
                       <img
-                        :src="`${link.ImageVersSite.url}`"
-                        :alt="`${link.ImageVersSite.alternativeText}`"
+                        :src="`${link.reseau_image.url}`"
+                        :alt="`${link.reseau_image.alt}`"
                       />
                     </a>
                   </li>
@@ -47,7 +47,7 @@ export default {
   mounted() {
     this.$mouse()
   
-    let one = "https://back-portf.herokuapp.com/options";
+    let one = "https://portfolioapi.local/wp-json/acf/v3/options/options";
     
     const requestOne = axios.get(one);
 
@@ -55,10 +55,14 @@ export default {
       .all([requestOne])
       .then(
         axios.spread((...responses) => {
-          const responseOne = responses[0];
 
-          this.logo = responseOne.data.logoPrincipal.url;
-          this.reseauxLink = responseOne.data.Icones;
+          const responseOne = responses[0].data.acf;
+          console.log(responseOne)
+
+          this.logo = responseOne.logo_principal;
+          console.log(this.logo)
+          this.reseauxLink = responseOne.icones;
+          console.log(this.reseauxLink)
 
           // use/access the results
         })

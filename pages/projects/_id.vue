@@ -2,7 +2,7 @@
   <div>
     <div
       id="project_background"
-      :style="`background-image:url('${projet.categoryImage}')`"
+      :style="`background-image:url('${imageCategory}')`"
     ></div>
     <div id="projet">
       <div class="container">
@@ -14,10 +14,10 @@
             <div class="desc">
               <h1>{{ projet.titre }}</h1>
               <p>{{ projet.typeDeProjet }}</p>
-              <p>{{ projet.descriptionDuProjet }}</p>
+              <p v-html="projet.descriptionDuProjet"></p>
             </div>
             <div v-for="image in projet.galery" :key="image.id" class="img">
-              <img :src="`${image.formats.large.url}`" alt="" />
+              <img :src="`${image.sizes['1536x1536']}`" alt="" />
             </div>
           </div>
         </div>
@@ -33,28 +33,39 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
+      imageCategory : null,
       projet: {
         titre: "",
         typeDeProjet: "",
         descriptionDuProjet: "",
         galery: null,
         categoryImage: null,
+        imageCategory : null
       },
     };
   },
   mounted() {
     document.body.style.overflow = "initial";
     axios
-      .get(`https://back-portf.herokuapp.com/projects/${this.id}`)
+      .get(process.env.wordpressAPI + "wp/v2/portfolio/" +this.id)
       .then((response) => {
+       console.log(response)
         this.projet = {
-          titre: response.data.titreDuProjet,
-          typeDeProjet: response.data.typeDeProjet,
-          descriptionDuProjet: response.data.descriptionDuProjet,
-          galery: response.data.Gallery,
-          categoryImage:
-            response.data.categorypourprojets[0].image.formats.large.url,
+          titre: response.data.title.rendered,
+          typeDeProjet: response.data.acf.type_de_projet,
+          descriptionDuProjet: response.data.acf.description,
+          galery: response.data.acf.gallerie,
+          categoryImage: response.data.categories[0],
         };
+        axios
+        .get(process.env.wordpressAPI + "wp/v2/categories/" +this.projet.categoryImage)
+        .then((response) =>{
+          console.log(response)
+         
+            this.imageCategory = response.data.acf.image_associee.url
+          
+
+        }) 
         console.log(this.projet);
       });
   },
