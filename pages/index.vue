@@ -10,14 +10,14 @@
         </div>
       </div>
       <div id="canvas1"></div>
+      <video loop muted src="" id="video"></video>
+      <video loop muted src="" id="video_superbyte"></video>
       <div v-if="!isHidden" class="container">
         <div class="row align-content-center" style="height: 100vh">
           <div class="col-12 col-lg-6" style="z-index: 100">
             <img src="/logo/logo_white.svg" />
             <h1 id="sous_titre">Graphist || Web Developer</h1>
-            <button @click="initCamera" class="btn_stroke_white">
-              See my projects
-            </button>
+            <button @click="initCamera" class="btn_stroke_white">See my projects</button>
             <p>{{ object_ID }}</p>
           </div>
         </div>
@@ -28,9 +28,7 @@
           <div
             v-bind:class="{ translation: showInformation }"
             v-bind:style="[
-              showInformation
-                ? { visibility: 'visible' }
-                : { visibility: 'hidden' },
+              showInformation ? { visibility: 'visible' } : { visibility: 'hidden' },
             ]"
             class="col-12 col-lg-6 bloc_Blanc"
           ></div>
@@ -38,9 +36,7 @@
             v-if="showInformation"
             v-bind:class="{ leftTranslation: showInformation }"
             v-bind:style="[
-              showInformation
-                ? { visibility: 'visible' }
-                : { visibility: 'hidden' },
+              showInformation ? { visibility: 'visible' } : { visibility: 'hidden' },
             ]"
             id="bloc_left"
             class="left"
@@ -88,17 +84,12 @@
   </div>
 </template>
 
-
-
 <script>
 import * as THREE from "three/build/three.module";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 
-import {
-  CSS2DRenderer,
-  CSS2DObject,
-} from "three/examples/jsm/renderers/CSS2DRenderer";
+import { CSS2DRenderer, CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer";
 import TWEEN from "@tweenjs/tween.js";
 import axios from "axios";
 
@@ -285,7 +276,7 @@ export default {
       title: "Portfolio Maxime Eloir - Homepage",
       meta: [
         {
-          hid: 'description',
+          hid: "description",
           name: "description",
           content:
             "My portfolio ! A selection of print & web projects and missions carried out during my studies and my business.",
@@ -297,12 +288,11 @@ export default {
   destroyed() {
     this.renderer.domElement = null;
     this.renderer = null;
-   
   },
   mounted() {
     document.body.style.overflow = "hidden";
     if (!this.isMobile()) {
-      console.log(this.isMobile());
+     
       this.init();
       window.addEventListener("resize", this.onWindowResize);
       this.animate();
@@ -375,7 +365,6 @@ export default {
         "/models/test_40.gltf",
         (result) => {
           this.modele = result.scene;
-          this.modele.scale.set(1, 1, 1);
 
           result.scene.traverse(function (node) {
             if (node.isMesh) {
@@ -386,6 +375,44 @@ export default {
           this.scene.add(this.modele);
 
           this.createLabel(this.modele);
+
+         
+          var video = document.getElementById("video");
+          video.src = "/video.mp4";
+          video.load();
+          video.play();
+          var texture = new THREE.VideoTexture(video);
+          texture.needsUpdate;
+          texture.minFilter = THREE.LinearFilter;
+          texture.magFilter = THREE.LinearFilter;
+          texture.format = THREE.RGBFormat;
+          texture.crossOrigin = "anonymous";
+
+          this.modele.children[1].children[3].material = new THREE.MeshBasicMaterial({
+            map: texture,
+          });
+
+          var video_superbyte = document.getElementById("video_superbyte");
+          video_superbyte.src = "/superbyte.webm";
+          video_superbyte.load();
+          video_superbyte.play();
+
+          const superByte = new THREE.VideoTexture(
+            video_superbyte,
+            THREE.CubeReflectionMapping
+          );
+          superByte.wrapS = THREE.RepeatWrapping;
+          superByte.repeat.x = -10;
+
+          var materialVideo = new THREE.MeshPhongMaterial({
+            map: superByte, // Set texture map
+          });
+          console.log(materialVideo)
+          console.log(this.modele.children[5]);
+          this.modele.children[5].children[1].material = materialVideo;
+          this.modele.children[5].children[1].material.side = THREE.DoubleSide;
+
+          this.modele.scale.set(1, 1, 1);
 
           this.mixer = new THREE.AnimationMixer(result.scene);
 
@@ -400,7 +427,8 @@ export default {
           const visibilityLoader = document.querySelector(".loadingScreen");
 
           const bar = Math.floor((250 * xhr.loaded) / totalSize);
-          const percentage = (xhr.loaded / totalSize) * 100;
+          
+          const percentage = Math.round((xhr.loaded / totalSize) * 100);
 
           loadbar.style.width = bar + "px";
 
@@ -432,27 +460,14 @@ export default {
       const penumbra = 0.5;
       const decay = 1.0;
 
-      this.light = new THREE.SpotLight(
-        0xffa95c,
-        5,
-        distance,
-        angle,
-        penumbra,
-        decay
-      );
+      this.light = new THREE.SpotLight(0xffa95c, 5, distance, angle, penumbra, decay);
 
       this.light.position.set(500, 800, 200);
       this.light.castShadow = true;
       this.scene.add(this.light);
 
-
-
-      
-
       document.getElementById("canvas1").appendChild(this.renderer.domElement);
-      document
-        .getElementById("canvas1")
-        .appendChild(this.labelRenderer.domElement);
+      document.getElementById("canvas1").appendChild(this.labelRenderer.domElement);
     },
     animate() {
       TWEEN.update();
@@ -511,12 +526,7 @@ export default {
         .onComplete(function () {
           rotation1.copy(rotationCamera);
 
-          rotation1.set(
-            rotationCamera.x,
-            rotationCamera.y,
-            rotationCamera.z,
-            "XYZ"
-          );
+          rotation1.set(rotationCamera.x, rotationCamera.y, rotationCamera.z, "XYZ");
         })
         .start();
     },
@@ -524,7 +534,7 @@ export default {
       this.showInformation = true;
       this.object_ID = event.currentTarget.id;
       this.fetchDataCategory(this.object_ID);
-      console.log(this.object_ID)
+
       const found = this.arrayProject.find((x) => x.name === this.object_ID);
 
       this.targetPosition = new THREE.Vector3(
@@ -544,23 +554,31 @@ export default {
     },
     fetchDataCategory(id) {
       axios
-        .get(process.env.wordpressAPI + 'wp/v2/categories?slug=' + id)
+        .get(process.env.wordpressAPI + "wp/v2/categories?slug=" + id)
         .then((response) => {
-          console.log(response)
-          let category_id = response.data[0].id
-          
-          this.informationsProjets = {
-            Titre: response.data[0].name,
-            TypeDeProjet: response.data[0].acf.type_de_projet,
-            Descriptif: response.data[0].acf.descriptif_du_projet,
-          };
-          axios
-        .get(process.env.wordpressAPI + 'wp/v2/portfolio?categories=' + category_id)
-        .then((response)=>{
-          console.log(response)
-          this.lienProjets = response.data;
-        })
 
+
+          let category_id = response.data[0].id;
+
+          if (window.localStorage.getItem("language") == "en") {
+            this.informationsProjets = {
+              Titre: response.data[0].name_en,
+              TypeDeProjet: response.data[0].acf.type_de_projet_en,
+              Descriptif: response.data[0].acf.descriptif_du_projet_en,
+            };
+          } else {
+            this.informationsProjets = {
+              Titre: response.data[0].name,
+              TypeDeProjet: response.data[0].acf.type_de_projet,
+              Descriptif: response.data[0].acf.descriptif_du_projet,
+            };
+          }
+          axios
+            .get(process.env.wordpressAPI + "wp/v2/portfolio?categories=" + category_id)
+            .then((response) => {
+           
+              this.lienProjets = response.data;
+            });
         });
     },
     initCamera() {
@@ -587,6 +605,11 @@ export default {
 <style scoped lang="scss">
 body {
   overflow: hidden;
+}
+video {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
 }
 .loadingScreen {
   overflow: hidden;
@@ -745,12 +768,12 @@ h2 {
   }
 }
 .liensClass {
-  margin-top:2rem;
+  margin-top: 2rem;
   display: inline-grid;
   width: 100%;
   .mobileLiens {
     margin-bottom: 1rem;
-    color:white;
+    color: white;
     text-align: center;
   }
 }

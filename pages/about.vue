@@ -20,7 +20,9 @@
           <div id="scroll" class="wrapper text">
             <p>
               <svg>
-                <text x="0" y="100">AdobeXD Wordpress NuxtJS NodeJS Javascript Figma Php </text>
+                <text x="0" y="100">
+                  AdobeXD Wordpress NuxtJS NodeJS Javascript Figma Php
+                </text>
               </svg>
             </p>
           </div>
@@ -47,10 +49,7 @@
             <ul class="experiences_Liste">
               <li v-for="experience in experiences" :key="experience.id">
                 <div class="texte">
-                  <button
-                    v-on:click="toggleActive(experience)"
-                    class="accordeon"
-                  >
+                  <button v-on:click="toggleActive(experience)" class="accordeon">
                     <h3>{{ experience.titre_de_lexperience }}</h3>
                     <div class="separation">
                       <span class="ligne"></span>
@@ -108,25 +107,45 @@ export default {
     },
   },
   mounted() {
-    document.body.style.overflowY = "initial";
-    document.body.style.overflowX = 'hidden';
-    console.log(process.env.wordpressAPI + "wp/v2/pages/40")
-    axios
-      .get(process.env.wordpressAPI + "wp/v2/pages/40")
-      .then((responses) => {
-        console.log(responses)
-        const responseOne = responses;
-        console.log(responseOne.data.acf)
-        this.title = responseOne.data.title.rendered;
-        this.presentation = responseOne.data.acf.texte_de_presentation;
-        this.img1 = responseOne.data.acf.image_de_profil.url;
-        // this.titleExperiences = responseOne.data.Sectionexperiences;
-        this.experiences = responseOne.data.acf.experiences_professionnelles;
-      })
+    if (window.localStorage.getItem("language") == "en") {
+      axios
+        .get(process.env.wordpressAPI + "wp/v2/pages/40")
+        .then((responses) => {
+          let en_ID = responses.data.wpml_translations.en_US.id
+          axios
+          .get(process.env.wordpressAPI + "wp/v2/pages/"+ en_ID)
+          .then((responses)=>{
+            const responseOne = responses;
+          console.log(responseOne.data.acf);
+          this.title = responseOne.data.title.rendered;
+          this.presentation = responseOne.data.acf.texte_de_presentation;
+          this.img1 = responseOne.data.acf.image_de_profil.url;
+          // this.titleExperiences = responseOne.data.Sectionexperiences;
+          this.experiences = responseOne.data.acf.experiences_professionnelles;
+          })
+          
+        })
+    } else {
+      document.body.style.overflowY = "initial";
+      document.body.style.overflowX = "hidden";
+      console.log(process.env.wordpressAPI + "wp/v2/pages/40");
+      axios
+        .get(process.env.wordpressAPI + "wp/v2/pages/40")
+        .then((responses) => {
+          console.log(responses);
+          const responseOne = responses;
+          console.log(responseOne.data.acf);
+          this.title = responseOne.data.title.rendered;
+          this.presentation = responseOne.data.acf.texte_de_presentation;
+          this.img1 = responseOne.data.acf.image_de_profil.url;
+          // this.titleExperiences = responseOne.data.Sectionexperiences;
+          this.experiences = responseOne.data.acf.experiences_professionnelles;
+        })
 
-      .catch((errors) => {
-        // react on errors.
-      });
+        .catch((errors) => {
+          // react on errors.
+        });
+    }
   },
 };
 </script>
@@ -139,14 +158,14 @@ export default {
   #scroll {
     position: absolute;
     left: -100px;
-    width:100%;
+    width: 100%;
     p {
       font-family: "Open Sans";
       font-weight: 800;
       font-size: 50px;
       svg {
         display: block;
-        width:100%;
+        width: 100%;
         text {
           fill: white;
           stroke: black;

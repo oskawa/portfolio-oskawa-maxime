@@ -1,7 +1,6 @@
 <template>
   <div class="app">
-  
-    <div class="cursor"></div>
+      <div class="cursor"></div>
     <div class="follow"></div>
     <header class="fixed-lg-top">
       <div class="container">
@@ -26,6 +25,8 @@
                     </a>
                   </li>
                 </ul>
+                <button class="lang" v-bind:class="{'active' : lang == 'en'}" v-on:click="switchLanguage('en')">EN</button> |
+                <button class="lang" v-bind:class="{'active' : lang == 'fr'}" v-on:click="switchLanguage('fr')">FR</button>
               </div>
             </div>
             <nav class="mobile d-lg-none"></nav>
@@ -46,9 +47,16 @@ export default {
       logo: null,
       reseauxLink: {},
       linksA: [],
+      lang : 'fr'
     };
   },
   mounted() {
+    if (!window.localStorage.getItem('language')){
+      localStorage.setItem('language', 'fr');
+     
+    }else{
+       this.lang = window.localStorage.getItem('language')
+    }
    this.$mouse()
     let one = "https://portfolioapi.local/wp-json/acf/v3/options/options";
 
@@ -74,6 +82,13 @@ export default {
       });
   },
   methods: {
+    switchLanguage: function(lang){
+      console.log(lang)
+     localStorage.setItem('language', ''+lang+'');
+     this.lang = lang
+      window.location.reload()
+
+    }
   
   },
 };
@@ -102,6 +117,12 @@ export default {
   border: black 1px solid;
   border-radius: 50%;
   pointer-events: none;
+}
+.lang{
+  color:black;
+  &.active{
+    font-weight: bold;
+  }
 }
 
 .col-3,

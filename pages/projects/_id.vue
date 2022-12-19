@@ -9,7 +9,9 @@
         <div class="row">
           <div class="col-12">
             <nuxt-link to="/">
-              <p>Return to projects</p>
+            
+              <p v-if="lang == 'en'">Return to projects</p>
+              <p v-else>Retour aux projets</p>
             </nuxt-link>
             <div class="desc">
               <h1>{{ projet.titre }}</h1>
@@ -33,47 +35,83 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      imageCategory : null,
+      imageCategory: null,
       projet: {
         titre: "",
         typeDeProjet: "",
         descriptionDuProjet: "",
         galery: null,
         categoryImage: null,
-        imageCategory : null
+        imageCategory: null,
+        lang : 'fr'
       },
     };
   },
   mounted() {
+   this.lang =  window.localStorage.getItem('language')
     document.body.style.overflow = "initial";
-    axios
-      .get(process.env.wordpressAPI + "wp/v2/portfolio/" +this.id)
-      .then((response) => {
-       console.log(response)
-        this.projet = {
-          titre: response.data.title.rendered,
-          typeDeProjet: response.data.acf.type_de_projet,
-          descriptionDuProjet: response.data.acf.description,
-          galery: response.data.acf.gallerie,
-          categoryImage: response.data.categories[0],
-        };
-        axios
-        .get(process.env.wordpressAPI + "wp/v2/categories/" +this.projet.categoryImage)
-        .then((response) =>{
-          console.log(response)
-         
-            this.imageCategory = response.data.acf.image_associee.url
+    if (window.localStorage.getItem("language") == "en") {
+      axios
+        .get(process.env.wordpressAPI + "wp/v2/portfolio/" + this.id)
+        .then((responses) => {
           
+          let en_ID = responses.data.wpml_translations.en_US.id;
+          
+          axios
+            .get(process.env.wordpressAPI + "wp/v2/portfolio/" + en_ID )
+            .then((response) => {
+              console.log(response.data.acf)              
+              this.projet = {
+                titre: response.data.title.rendered,
+                typeDeProjet: response.data.acf.type_de_projet,
+                descriptionDuProjet: response.data.acf.description,
+                galery: response.data.acf.gallerie,
+                categoryImage: response.data.categories[0],
+              };
+             
+              axios
+                .get(
+                  process.env.wordpressAPI +
+                    "wp/v2/categories/" +
+                    this.projet.categoryImage
+                )
+                .then((response) => {
+                 
+                  
+                  this.imageCategory = response.data.acf.image_associee.url;
+                });
+            
+            });
+        });
+    } else {
+      axios
+        .get(process.env.wordpressAPI + "wp/v2/portfolio/" + this.id)
+        .then((response) => {
+         
+          this.projet = {
+            titre: response.data.title.rendered,
+            typeDeProjet: response.data.acf.type_de_projet,
+            descriptionDuProjet: response.data.acf.description,
+            galery: response.data.acf.gallerie,
+            categoryImage: response.data.categories[0],
+          };
+          axios
+            .get(
+              process.env.wordpressAPI + "wp/v2/categories/" + this.projet.categoryImage
+            )
+            .then((response) => {
+             
 
-        }) 
-        console.log(this.projet);
-      });
+              this.imageCategory = response.data.acf.image_associee.url;
+            });
+        
+        });
+    }
   },
 };
 </script>
 
 <style scoped lang="scss">
-
 a {
   color: black;
   font-family: "Open Sans";
