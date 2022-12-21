@@ -58,7 +58,7 @@ export default {
        this.lang = window.localStorage.getItem('language')
     }
    this.$mouse()
-    let one = "https://portfolioapi.local/wp-json/acf/v3/options/options";
+    let one = "https://portfolio-maxime-back.maxime-eloir.fr/wp-json/acf/v3/options/options";
 
     const requestOne = axios.get(one);
 
