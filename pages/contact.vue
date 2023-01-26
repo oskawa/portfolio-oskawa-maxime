@@ -9,19 +9,18 @@
           <h1>{{ title }}</h1>
           <!-- First, we make sure we don't have a bot -->
           <div v-if="isBot" class="">
-            Great! You have proven to be a bot! I've destroyed the form from the
-            page, and acted like you successfully sent the form.
+            Great! You have proven to be a bot! I've destroyed the form from the page, and
+            acted like you successfully sent the form.
           </div>
           <!-- Then we show the rest of the component if not. -->
           <div v-else>
             <div v-if="success" class="">
-              Great! Your message has been sent successfully. I will try to
-              respond quickly.
+              Great! Your message has been sent successfully. I will try to respond
+              quickly.
             </div>
             <form v-else v-on:submit.prevent="sendMessage" class="">
               <div v-if="errored" class="">
-                Bummer, Something went wrong. Did you fill out all of the
-                fields?
+                Bummer, Something went wrong. Did you fill out all of the fields?
               </div>
               <div class="labelInput">
                 <label for="full_name" class="">Full name*</label>
@@ -32,12 +31,11 @@
                   name="name"
                   id="full_name"
                   class="form-input"
-                 
                 />
               </div>
               <!-- The whole field and label is set to display hidden with Tailwind CSS -->
 
-              <div class="labelInput"> 
+              <div class="labelInput">
                 <label for="email">Email*</label>
 
                 <input
@@ -47,19 +45,12 @@
                   id="email"
                   type="email"
                   class=""
-                  
                 />
               </div>
               <div class="labelInput">
                 <label for="phone">Phone</label>
 
-                <input
-                  v-model="phone"
-                  name="phone"
-                  id="phone"
-                  class="form-input"
-                 
-                />
+                <input v-model="phone" name="phone" id="phone" class="form-input" />
               </div>
               <div class="labelInput">
                 <label for="message">Message</label>
@@ -71,7 +62,6 @@
                   id="message"
                   rows="4"
                   class="form-input"
-                  
                 ></textarea>
               </div>
               <div class="invisible">
@@ -85,7 +75,7 @@
               </div>
               <div class="">
                 <span class="">
-                  <button type="submit" class="btn_stroke">
+                  <button type="submit" class="btn_stroke submit">
                     {{ loading ? "Sending Message..." : "Submit" }}
                   </button>
                 </span>
@@ -101,8 +91,8 @@
 <script>
 import axios from "axios";
 export default {
-  head(){
-    return{
+  head() {
+    return {
       title: "Portfolio Maxime Eloir - Contact",
       meta: [
         {
@@ -111,7 +101,7 @@ export default {
           hid: "description",
         },
       ],
-    }
+    };
   },
   layout: "black",
   data() {
@@ -131,26 +121,32 @@ export default {
   },
 
   mounted() {
-     document.body.style.overflow = "initial";
-    let one = "https://back-portf.herokuapp.com/contact/";
+    document.body.style.overflow = "initial";
 
-    const requestOne = axios.get(one);
-
-    axios
-      .all([requestOne])
-      .then(
-        axios.spread((...responses) => {
-          const responseOne = responses[0];
-
-          this.title = responseOne.data.Titre;
-          this.img = responseOne.data.Image.formats.large.url;
-
-          // use/access the results
-        })
-      )
-      .catch((errors) => {
-        // react on errors.
+    if (window.localStorage.getItem("language") == "en") {
+      axios.get(process.env.wordpressAPI + "wp/v2/pages/43").then((responses) => {
+        let en_ID = responses.data.wpml_translations.en_US.id;
+        axios.get(process.env.wordpressAPI + "wp/v2/pages/" + en_ID).then((responses) => {
+         
+     this.img = responses.data.acf.contact_image.sizes.large;
+        });
       });
+    } else {
+      document.body.style.overflowY = "initial";
+      document.body.style.overflowX = "hidden";
+
+      axios
+        .get(process.env.wordpressAPI + "wp/v2/pages/43")
+        .then((responses) => {
+         
+
+          this.img = responses.data.acf.contact_image.sizes.large;
+        })
+
+        .catch((errors) => {
+          // react on errors.
+        });
+    }
   },
   methods: {
     sendMessage() {
@@ -162,14 +158,28 @@ export default {
       }
       // Otherwise the form will try to go through.
       else {
+        const emailBody = {
+          "your-name": this.name,
+          "your-email": this.email,
+          "your-message": this.message,
+          "your-phone": this.phone,
+        };
+        const form = new FormData();
+        for (const field in emailBody) {
+          form.append(field, emailBody[field]);
+        }
         axios
-          .post("https://back-portf.herokuapp.com/messages", {
-            name: this.name,
-            email: this.email,
-            phone: this.phone,
-            message: this.message,
-          })
+          .post(
+            "https://portfolio-maxime-back.maxime-eloir.fr/wp-json/contact-form-7/v1/contact-forms/166/feedback",
+            form,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
           .then((response) => {
+            console.log(response);
             this.success = true;
             this.errored = false;
           })
@@ -187,7 +197,7 @@ export default {
 
 <style lang="scss">
 #contact {
-  margin-top:5rem;
+  margin-top: 5rem;
   h1 {
     font-family: "Open Sans", sans-serif;
     font-weight: 800;
@@ -209,11 +219,11 @@ export default {
     border-bottom: 1px solid black;
     width: 100%;
   }
-  input:focus{
-    border:none;
-    outline:none;
+  input:focus {
+    border: none;
+    outline: none;
   }
- 
+
   img {
     width: 100%;
     position: relative;
@@ -234,7 +244,7 @@ export default {
     }
   }
 }
-.labelInput{
-  margin-bottom:1rem;
+.labelInput {
+  margin-bottom: 1rem;
 }
 </style>

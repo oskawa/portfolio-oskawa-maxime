@@ -54,7 +54,7 @@ export default {
       axios
         .get(process.env.wordpressAPI + "wp/v2/portfolio/" + this.id)
         .then((responses) => {
-          
+          console.log(responses)          
           let en_ID = responses.data.wpml_translations.en_US.id;
           
           axios

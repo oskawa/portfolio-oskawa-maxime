@@ -286,8 +286,12 @@ export default {
     };
   },
   destroyed() {
-    this.renderer.domElement = null;
+    console.log(this.renderer)
+    if (this.renderer !== null){
+      this.renderer.domElement = null;
+      
     this.renderer = null;
+      }
   },
   mounted() {
     document.body.style.overflow = "hidden";
@@ -299,6 +303,7 @@ export default {
     }
     if (!this.show) {
     }
+    console.log(this.renderer)
   },
   watch: {
     $route(to, from) {
