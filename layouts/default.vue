@@ -174,6 +174,9 @@ header {
     display: inline-flex;
     margin: 0;
     list-style: none;
+    img{
+      filter: invert(1);
+    }
     li {
       margin: 0;
       padding-right: 1rem;

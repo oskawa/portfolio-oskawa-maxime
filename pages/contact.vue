@@ -158,23 +158,29 @@ export default {
       }
       // Otherwise the form will try to go through.
       else {
+        console.log('hello')
         const emailBody = {
           "your-name": this.name,
           "your-email": this.email,
-          "your-message": this.message,
-          "your-phone": this.phone,
+          "your-message": this.message
+          
         };
+        console.log(emailBody)
         const form = new FormData();
         for (const field in emailBody) {
           form.append(field, emailBody[field]);
         }
+        console.log(form)
         axios
           .post(
-            "https://portfolio-maxime-back.maxime-eloir.fr/wp-json/contact-form-7/v1/contact-forms/166/feedback",
-            form,
+            "https://portfolio-maxime-back.maxime-eloir.fr/wp-json/contact-form-7/v1/contact-forms/166/feedback",{
+              form
+
+            },
             {
               headers: {
-                "Content-Type": "multipart/form-data",
+              
+                "Content-Type": "multipart/form-data"
               },
             }
           )
@@ -184,6 +190,7 @@ export default {
             this.errored = false;
           })
           .catch((error) => {
+            console.log(error)
             this.errored = true;
           })
           .finally(() => {
