@@ -121,6 +121,11 @@ export default {
   },
 
   mounted() {
+    if (this.renderer !== null){
+      this.renderer.domElement = null;
+      
+    this.renderer = null;
+      }
     document.body.style.overflow = "initial";
 
     if (window.localStorage.getItem("language") == "en") {
@@ -165,12 +170,12 @@ export default {
           "your-message": this.message
           
         };
-        console.log(emailBody)
+      
         const form = new FormData();
         for (const field in emailBody) {
           form.append(field, emailBody[field]);
         }
-        console.log(form)
+       
         axios
           .post(
             "https://portfolio-maxime-back.maxime-eloir.fr/wp-json/contact-form-7/v1/contact-forms/166/feedback",{

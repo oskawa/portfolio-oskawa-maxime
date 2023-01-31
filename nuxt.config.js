@@ -84,7 +84,7 @@ export default {
   pwa: {
     manifest: {
       name: 'Portfolio de Maxime Eloir',
-      lang: 'En',
+      lang: 'Fr',
       useWebmanifestExtension: false
     }
   }

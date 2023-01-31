@@ -157,7 +157,8 @@ export default {
                     this.projet.categoryImage
                 )
                 .then((response) => {
-                  this.imageCategory = response.data.acf.image_associee.url;
+                  console.log(response.data.acf.image_associee)
+                   this.imageCategory = response.data.acf.image_associee.sizes.large;
                 });
             });
         });
@@ -179,7 +180,8 @@ export default {
               process.env.wordpressAPI + "wp/v2/categories/" + this.projet.categoryImage
             )
             .then((response) => {
-              this.imageCategory = response.data.acf.image_associee.url;
+               console.log(response.data.acf.image_associee)
+              this.imageCategory = response.data.acf.image_associee.sizes.large;
             });
         });
     }

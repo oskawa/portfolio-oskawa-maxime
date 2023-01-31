@@ -10,7 +10,7 @@
           class="dataCat project_link"
         >
         <div class="project_image">
-          <img src="" alt="">
+          <img :src="`${data.acf.featured_image.sizes.medium_large}`" alt="">
         </div>
 
           <div class="p-1">

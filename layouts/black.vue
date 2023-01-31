@@ -67,12 +67,11 @@ export default {
       .then(
         axios.spread((...responses) => {
           const responseOne = responses[0].data.acf;
-          console.log(responseOne)
-
+         
           this.logo = responseOne.logo_principal;
-          console.log(this.logo)
+      
           this.reseauxLink = responseOne.icones;
-          console.log(this.reseauxLink)
+       
 
           // use/access the results
         })
@@ -83,7 +82,7 @@ export default {
   },
   methods: {
     switchLanguage: function(lang){
-      console.log(lang)
+     
      localStorage.setItem('language', ''+lang+'');
      this.lang = lang
       window.location.reload()

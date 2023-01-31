@@ -286,24 +286,23 @@ export default {
     };
   },
   destroyed() {
-    console.log(this.renderer)
-    if (this.renderer !== null){
+    console.log(this.renderer);
+    if (this.renderer !== null) {
       this.renderer.domElement = null;
-      
-    this.renderer = null;
-      }
+
+      this.renderer = null;
+    }
   },
   mounted() {
     document.body.style.overflow = "hidden";
     if (!this.isMobile()) {
-     
       this.init();
       window.addEventListener("resize", this.onWindowResize);
       this.animate();
     }
     if (!this.show) {
     }
-    console.log(this.renderer)
+    console.log(this.renderer);
   },
   watch: {
     $route(to, from) {
@@ -381,7 +380,6 @@ export default {
 
           this.createLabel(this.modele);
 
-         
           var video = document.getElementById("video");
           video.src = "/video.mp4";
           video.load();
@@ -412,7 +410,7 @@ export default {
           var materialVideo = new THREE.MeshPhongMaterial({
             map: superByte, // Set texture map
           });
-          console.log(materialVideo)
+          console.log(materialVideo);
           console.log(this.modele.children[5]);
           this.modele.children[5].children[1].material = materialVideo;
           this.modele.children[5].children[1].material.side = THREE.DoubleSide;
@@ -432,7 +430,7 @@ export default {
           const visibilityLoader = document.querySelector(".loadingScreen");
 
           const bar = Math.floor((250 * xhr.loaded) / totalSize);
-          
+
           const percentage = Math.round((xhr.loaded / totalSize) * 100);
 
           loadbar.style.width = bar + "px";
@@ -477,8 +475,10 @@ export default {
     animate() {
       TWEEN.update();
       //
-      this.renderer.render(this.scene, this.camera);
-      this.labelRenderer.render(this.scene, this.camera);
+      if (this.renderer) {
+        this.renderer.render(this.scene, this.camera);
+        this.labelRenderer.render(this.scene, this.camera);
+      }
       var delta = this.clock.getDelta();
 
       if (this.mixer) this.mixer.update(delta);
@@ -561,8 +561,6 @@ export default {
       axios
         .get(process.env.wordpressAPI + "wp/v2/categories?slug=" + id)
         .then((response) => {
-
-
           let category_id = response.data[0].id;
 
           if (window.localStorage.getItem("language") == "en") {
@@ -581,7 +579,6 @@ export default {
           axios
             .get(process.env.wordpressAPI + "wp/v2/portfolio?categories=" + category_id)
             .then((response) => {
-           
               this.lienProjets = response.data;
             });
         });
