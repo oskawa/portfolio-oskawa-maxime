@@ -185,7 +185,8 @@ export default {
             },
             {
               headers: {
-              
+                "Access-Control-Allow-Headers":"*",
+                "Access-Control-Allow-Origin":"*",
                 "Content-Type": "multipart/form-data"
               },
             }
