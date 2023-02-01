@@ -182,14 +182,7 @@ export default {
             "https://portfolio-maxime-back.maxime-eloir.fr/wp-json/contact-form-7/v1/contact-forms/166/feedback",{
               form
 
-            },
-            {
-              headers: {
-                "Access-Control-Allow-Headers":"*",
-                "Access-Control-Allow-Origin":"*",
-                "Content-Type": "multipart/form-data"
-              },
-            }
+            }            
           )
           .then((response) => {
             console.log(response);
