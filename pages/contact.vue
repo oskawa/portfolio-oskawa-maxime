@@ -117,24 +117,23 @@ export default {
       email: "",
       phone: "",
       message: "",
-      renderer:null,
+      renderer: null,
     };
   },
 
   mounted() {
-    if (this.renderer !== null){
+    if (this.renderer !== null) {
       this.renderer.domElement = null;
-      
-    this.renderer = null;
-      }
+
+      this.renderer = null;
+    }
     document.body.style.overflow = "initial";
 
     if (window.localStorage.getItem("language") == "en") {
       axios.get(process.env.wordpressAPI + "wp/v2/pages/43").then((responses) => {
         let en_ID = responses.data.wpml_translations.en_US.id;
         axios.get(process.env.wordpressAPI + "wp/v2/pages/" + en_ID).then((responses) => {
-         
-     this.img = responses.data.acf.contact_image.sizes.large;
+          this.img = responses.data.acf.contact_image.sizes.large;
         });
       });
     } else {
@@ -144,8 +143,6 @@ export default {
       axios
         .get(process.env.wordpressAPI + "wp/v2/pages/43")
         .then((responses) => {
-         
-
           this.img = responses.data.acf.contact_image.sizes.large;
         })
 
@@ -164,25 +161,28 @@ export default {
       }
       // Otherwise the form will try to go through.
       else {
-        console.log('hello')
+        console.log("hello");
         const emailBody = {
           "your-name": this.name,
           "your-email": this.email,
-          "your-message": this.message
-          
+          "your-message": this.message,
         };
-      
+
         const form = new FormData();
         for (const field in emailBody) {
           form.append(field, emailBody[field]);
         }
-       
+        console.log(form)
+
         axios
           .post(
-            "https://portfolio-maxime-back.maxime-eloir.fr/wp-json/contact-form-7/v1/contact-forms/166/feedback",{
-              form
-
-            }            
+            "https://portfolio-maxime-back.maxime-eloir.fr/wp-json/contact-form-7/v1/contact-forms/166/feedback",
+            form,
+            {
+              headers: {
+                "content-type": "multipart/form-data",
+              },
+            }
           )
           .then((response) => {
             console.log(response);
@@ -190,7 +190,7 @@ export default {
             this.errored = false;
           })
           .catch((error) => {
-            console.log(error)
+            console.log(error);
             this.errored = true;
           })
           .finally(() => {
