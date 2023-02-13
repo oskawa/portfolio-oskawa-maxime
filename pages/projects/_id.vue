@@ -15,8 +15,8 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-12">
-                  <h1>{{ projet.titre }}</h1>
-                  <p>{{ projet.typeDeProjet }}</p>
+                  <h1 v-html="projet.titre"></h1>
+                  <p v-html="projet.typeDeProjet"></p>
                 </div>
               </div>
             </div>
@@ -109,6 +109,7 @@
 import axios from "axios";
 
 export default {
+  
   data() {
     return {
       id: this.$route.params.id,
@@ -124,6 +125,16 @@ export default {
       lang: "fr",
       project: [],
     };
+  },
+  head: {
+    title: 'Portfolio Maxime Eloir - Page de projets',
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Page de projets'
+      }
+    ],
   },
   async mounted() {
     console.log(this.lang);

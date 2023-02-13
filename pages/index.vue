@@ -52,6 +52,7 @@
               :key="lien.id"
               :to="`/projects/${lien.id}`"
               class="project_link"
+              v-html="lien.title.rendered"
             >
               {{ lien.title.rendered }}
             </nuxt-link>
@@ -286,7 +287,7 @@ export default {
     };
   },
   destroyed() {
-    console.log(this.renderer);
+    
     if (this.renderer !== null) {
       this.renderer.domElement = null;
 
@@ -302,7 +303,7 @@ export default {
     }
     if (!this.show) {
     }
-    console.log(this.renderer);
+   
   },
   watch: {
     $route(to, from) {
@@ -410,8 +411,7 @@ export default {
           var materialVideo = new THREE.MeshPhongMaterial({
             map: superByte, // Set texture map
           });
-          console.log(materialVideo);
-          console.log(this.modele.children[5]);
+          
           this.modele.children[5].children[1].material = materialVideo;
           this.modele.children[5].children[1].material.side = THREE.DoubleSide;
 
@@ -580,9 +580,11 @@ export default {
             .get(process.env.wordpressAPI + "wp/v2/portfolio?categories=" + category_id)
             .then((response) => {
               this.lienProjets = response.data;
+              
             });
         });
     },
+    
     initCamera() {
       var duration = 2000;
       this.cameraRotation = new THREE.Vector3(0, 0, 0);

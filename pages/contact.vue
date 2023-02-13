@@ -181,6 +181,7 @@ export default {
             {
               headers: {
                 "content-type": "multipart/form-data",
+                
               },
             }
           )
